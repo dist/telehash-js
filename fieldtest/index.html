@@ -24,38 +24,26 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
         </style>
         <script src="jquery.min.js"></script>
         <script src="jquery.tmpl.min.js"></script>
-        <script src="../includes/forge.min.js"></script>
-        <script src="../includes/jsbn.js"></script>
-        <script src="../includes/jsbn2.js"></script>
-        <script src="../includes/ec.js"></script>
-        <script src="../includes/sec.js"></script>
-        <script src="../includes/prng4.js"></script>
-        <script src="../includes/rng.js"></script>
-      	<script src="../thjs.js"></script>
-      	<script src="../thforge.js"></script>
-      	<script src="../thweb.js"></script>
-      	<script src="../seeds.js"></script>
+        <script src="../build/bundle.js"></script>
         <script src="socket.io.js"></script>
         <script>
-        var me; // make global for console testing
-        thforge.forge(forge);
-        thjs.debug(function(){console.log.apply(console,arguments)});
+
         function getId(callback)
         {
-        	if(localStorage.nick)
-        	{
-        		var ret = {nick:localStorage.nick, public:localStorage.pubkey, private:localStorage.prikey};
-        		console.log("returning key",ret);
+          if(localStorage.nick)
+          {
+            var ret = {nick:localStorage.nick, public:localStorage.pubkey, private:localStorage.prikey};
+            console.log("returning key",ret);
             ret.seeds = seeds;
             return callback(ret);
-        	}
+          }
 
-        	// generate/save one nicely
-        	window.alert("generating private local id, this only happens once and should be less than 30 seconds");
-          thforge.genkey(function(err, keys){
+          // generate/save one nicely
+          window.alert("generating private local id, this only happens once and should be less than 30 seconds");
+          thjs.genkey(function(err, keys){
             if(err) return window.alert("error: "+err);
-        		localStorage.pubkey = keys.public;
-        		localStorage.prikey = keys.private;
+            localStorage.pubkey = keys.public;
+            localStorage.prikey = keys.private;
            localStorage.nick = window.prompt("enter a nickname");
            getId(callback);
           });
@@ -94,9 +82,9 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
             $(document).ready(function() {
               console.log("READY")
               getId(function(id){
-          	    var sockets = {};
+                var sockets = {};
                 console.log("STARTING")
-          	    	me = thjs.hashname(id, function(path, msg, to) {
+                  me = thjs.hashname(id, function(path, msg, to) {
                     if(path.type == "webrtc" && me.paths.webrtc)
                     {
                       console.log("sending webrtc", to.hashname, msg.length());
@@ -110,7 +98,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
                       if(!sockets[path.http]){
                         sockets[path.http] = io.connect(path.http);
                         sockets[path.http].on("packet", function(packet){
-                  	    	me.receive(forge.util.decode64(packet.data), path);                        
+                          me.receive(forge.util.decode64(packet.data), path);                        
                         });
                       }
                       sockets[path.http].emit("packet", {data: forge.util.encode64(msg.bytes())});
@@ -119,11 +107,11 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
                     console.log("dropping ",path.type);
                   });
                   thweb.rtcAdd(me,sockets); // enable webrtc if possible
-          	    	console.log("switch created",me);
-          				id.seeds.forEach(me.addSeed, me);
-          				me.online(function(err){
+                  console.log("switch created",me);
+                  id.seeds.forEach(me.addSeed, me);
+                  me.online(function(err){
                     if(err){
-                      $("#error").html = err;
+                      $("#error").html(err);
                       $("#error").show();
                       return;
                     }
@@ -132,7 +120,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
                       $("#systemMessageTemplate").tmpl({message: message}).appendTo("#messages");
                       $("#messages").scrollTop($("#messages").prop("scrollHeight") - $("#messages").height());
                     }
-          					log("online",me.hashname,err);
+                    log("online",me.hashname,err);
                     function chat(nick, message){
                       $("#chatMessageTemplate").tmpl({sender:nick, message: message}).appendTo("#messages");
                       $("#messages").scrollTop($("#messages").prop("scrollHeight") - $("#messages").height());
@@ -387,7 +375,7 @@ html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pr
                           if(cmds[cmd]) cmds[cmd](parts);
                           else log("I don't know how to "+cmd);
                       });
-          				});
+                  });
                 
               });
                 

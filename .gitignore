@@ -5,3 +5,6 @@ chrome/thforge.js
 chrome/seeds.json
 chrome/seeds.js
 npm-debug.log
+.DS_Store
+fieldtest/debug.log
+fieldtest/id.json
