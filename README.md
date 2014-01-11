@@ -1,6 +1,3 @@
-telehash implemented javascript
-=======================================
-
 Node.js
 =======
 
