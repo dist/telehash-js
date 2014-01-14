@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Chat</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+      <div id="error">something went wrong</div>
+        <div id="chat">
+            <div id="main">
+                <ul id="messages"></ul>
+                <form id="message-form">
+                    <input id="message-input" />
+                </form>
+            </div>
+            <ul id="users"></ul>
+        </div>
+        <script id="userTemplate" type="text/x-jquery-tmpl">
+            <li id="user-${user}">${user}</li>
+        </script>
+        <script id="chatMessageTemplate" type="text/x-jquery-tmpl">
+            <li><span class="sender">${sender}</span>: ${message}</li>
+        </script>
+        <script id="systemMessageTemplate" type="text/x-jquery-tmpl">
+            <li class="system-message">${message}</li>
+        </script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+        <script type="text/javascript" src="../../build/bundle.js"></script>
+        <script type="text/javascript" src="js/socket.io.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+    </body>
+</html>
