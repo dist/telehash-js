@@ -1,10 +1,6 @@
 node_modules/
-chrome/includes
-chrome/thjs.js
-chrome/thforge.js
-chrome/seeds.json
-chrome/seeds.js
 npm-debug.log
 .DS_Store
-fieldtest/debug.log
-fieldtest/id.json
+examples/node/debug.log
+examples/node/id.json
+refactor

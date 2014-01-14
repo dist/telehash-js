@@ -1,3 +1,4 @@
 'use strict';
+/*jshint browser:true*/
 
-window.thjs = require('./lib/main');
+window.telehash = require('./lib/main');
