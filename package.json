@@ -18,7 +18,10 @@
     "socket.io": "*"
   },
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "seed": "cd seed && node seed.js --seeds './seed/seeds.json'",
+    "browser-example":"cd examples/browser && node serve.js",
+    "node-example":"cd examples/node && node run.js"
   },
   "browser": {
     "./lib/crypto/node.js": "./lib/crypto/browser.js"
