@@ -5,7 +5,7 @@
   "version": "0.0.41",
   "main": "thjs.js",
   "dependencies": {
-    "node-forge": "0.2.x",
+    "node-forge": "0.10.x",
     "browserify": "~3.19.1",
     "uglify-js": "~2.4.8"
   },
